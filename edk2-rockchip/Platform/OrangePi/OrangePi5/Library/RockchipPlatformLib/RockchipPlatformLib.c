@@ -181,6 +181,8 @@ I2cIomux (
     GpioPinSetFunction(0, GPIO_PIN_PD2, 3); //i2c0_sda_m2
     break;
   case 1:
+    GpioPinSetFunction(1, GPIO_PIN_PD2, 9); //i2c1_scl_m4
+    GpioPinSetFunction(1, GPIO_PIN_PD3, 9); //i2c1_sda_m4
     break;
   case 2:
     GpioPinSetFunction(0, GPIO_PIN_PB7, 9); //i2c2_scl_m0
