@@ -49,5 +49,7 @@ DefinitionBlock ("Dsdt.aml", "DSDT", 2, "RKCP  ", "RK3588  ", 2)
     Scope (I2C6) {
       include ("Es8388.asl")
     }
+
+    include ("Trackpad.asl")
   }
 }
