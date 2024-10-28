@@ -4,8 +4,8 @@
 // Trackpad
 Device (TCPD)
 {
-  Name (_HID, "MSFT8000") 
-  Name (_CID, "MSFT8000") 
+  Name (_HID, "MSHW0238") 
+  Name (_CID, "PNP0C50") 
   Name (_UID, 1) 
   Name (_DEP, Package() 
   {
@@ -25,32 +25,32 @@ Device (TCPD)
     })
     Return(RBUF)
   }
-  
-  Method(_DSM, 0x4, NotSerialized)
+
+
+  Method (_DSM, 0x4, Serialized)
   {
-    // DSM UUID
-    If(LEqual(Arg0, ToUUID("3CDFF6F7-4267-4555-AD05-B30A3D8938DE")))
+    // ACPI DSM UUID for HIDI2C
+    If (Arg0 == ToUUID("3CDFF6F7-4267-4555-AD05-B30A3D8938DE"))
     {
-      // Function 0 : Query Function
-      If(LEqual(Arg2, Zero))
+      // Function 0: Query function, return based on revision
+      If (Arg2 == 0)
       {
-        // Revision 1
-        If(LEqual(Arg1, One))
+        // DSM Revision
+        If (Arg1 == 1)
         {
-          Store ("Method _DSM Function Query", Debug)
-          Return(Buffer(One) { 0x03 })
+          // Revision 1: Function 1 supported
+          Return(Buffer(One) { 0x03 })  // indicates supports Function index 1
         }
       }
       // Function 1 : HID Function
-      If(LEqual(Arg2, One))
+      ElseIf (Arg2 == 1)
       {
-        Store ("Method _DSM Function HID", Debug)     
-        // HID Descriptor Address
-        Return(0x0001)
+        // HID Descriptor Address.
+        Return(0x0000)
       }
     }
 
+    // No other GUIDs supported
     Return(Buffer(One) { 0x00 })
   }
-  
 } //end of TCPD device
