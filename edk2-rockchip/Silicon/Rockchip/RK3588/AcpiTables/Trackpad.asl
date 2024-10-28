@@ -46,7 +46,7 @@ Device (TCPD)
       ElseIf (Arg2 == 1)
       {
         // HID Descriptor Address.
-        Return(0x0000)
+        Return(0x0001)
       }
     }
 
