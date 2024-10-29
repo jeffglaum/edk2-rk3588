@@ -4,7 +4,7 @@
 // Trackpad
 Device (TCPD)
 {
-  Name (_HID, "MSHW0238") 
+  Name (_HID, "ELAN31B8") 
   Name (_CID, "PNP0C50") 
   Name (_UID, 1) 
   Name (_DEP, Package() 
@@ -19,9 +19,9 @@ Device (TCPD)
     {
       // OrangePi-5: I2C1_SCL_M4 (pin 18) = Elan SCL, I2C1_SDA_M4 (pin 16) = Elan SDA
       // Elan: I2C slave address 0x15 (7-bit mode), max speed 400 kbit/s
-      I2CSerialBus(0x15, ControllerInitiated, 400000, AddressingMode7Bit, "\\_SB.I2C1",,,,)
+      I2cSerialBusV2(0x15, ControllerInitiated, 400000, AddressingMode7Bit, "\\_SB.I2C1", 0, ResourceConsumer,,Exclusive,)
       // OrangePi-5: GPIO2_D4 / gpio2_port[28] (pin 22) = Elan GPIO/INT
-      GpioInt(Edge, ActiveLow, ExclusiveAndWake, PullUp, 0, "\\_SB.GPI2", ,) {GPIO_PIN_PD4}  
+      GpioInt(Level, ActiveLow, ExclusiveAndWake, PullUp, 0, "\\_SB.GPI2", 0, ResourceConsumer) {GPIO_PIN_PD4}  
     })
     Return(RBUF)
   }
